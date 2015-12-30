@@ -1,6 +1,5 @@
-import requests
 import json
-import jsonpickle
+import requests
 
 """
 Query the MTA BusTime stop monitoring endpoint for bus information.
@@ -68,16 +67,6 @@ class StopMonitor(object):
       output.append("no buses are on the way. sad :(")
     return '\n'.join(output)
 
-  def json(self):
-    response = { 'bustime': {} }
-
-    if self.error:
-      response['bustime']['error'] = json.dumps(self.error)
-    else:
-      response['bustime']['visits'] = jsonpickle.encode(self.visits)
-
-    return response
-
 # class Visit(JSONEncoder):
 class Visit(object):
 
@@ -92,13 +81,3 @@ class Visit(object):
   def __str__(self):
     return ("{} bus {} stops away ({} miles)").format(
           self.route, self.stops_away, self.distance)
-
-  # def default(self, o):
-  #   return o.__dict__
-
-  def __getstate__(self):
-    return json.dumps({
-      'route': self.route,
-      'stops_away': self.stops_away,
-      'distance': self.distance,
-    })
