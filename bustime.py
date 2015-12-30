@@ -14,7 +14,6 @@ FEET_PER_METER = 3.28084
 FEET_PER_MILE = 5280
 
 class StopMonitor(object):
-
   def __init__(self, api_key, stop_id, route, max_visits=3):
     self.api_key = api_key
     self.stop_id = stop_id
@@ -22,9 +21,7 @@ class StopMonitor(object):
     self.max_visits = max_visits
     self.visits = []
     self.error = None
-    self.name = self.visits[0].monitored_stop if len(self.visits) > 0 else None
 
-    # TODO define num_visits globally (or per instance of this class)
     params = {
       'key': self.api_key,
       'OperatorRef': 'MTA',
@@ -56,18 +53,23 @@ class StopMonitor(object):
       self.error = 'The BusTime API response was invalid'
 
   def __str__(self):
-    output = []
-    if self.name:
-      output.append("{}:".format(self.name))
-    for visit in self.visits:
-      output.append("{}. {}".format(self.visits.index(visit)+1, visit))
-    if len(self.visits) == 0:
-      output.append("no buses are on the way. sad :(")
-    return '\n'.join(output)
+    if self.error:
+      return self.error
+    else:
+      output = []
+      stop_name = self.visits[0].monitored_stop if len(self.visits) > 0 else None
+      if stop_name:
+        output.append(stop_name)
 
-# class Visit(JSONEncoder):
+      if len(self.visits) == 0:
+        output.append('No buses en route')
+
+      for visit in self.visits:
+        output.append(str(visit))
+
+      return '\n'.join(output)
+
 class Visit(object):
-
   def __init__(self, raw_visit):
     self.route = raw_visit['MonitoredVehicleJourney']['PublishedLineName']
     call = raw_visit['MonitoredVehicleJourney']['MonitoredCall']
@@ -77,5 +79,4 @@ class Visit(object):
     self.distance = round(distances['DistanceFromCall'] * FEET_PER_METER / FEET_PER_MILE, 2)
 
   def __str__(self):
-    return ("{} bus {} stops away ({} miles)").format(
-          self.route, self.stops_away, self.distance)
+    return ('{} {} stops/{}mi').format(self.route, self.stops_away, self.distance)
