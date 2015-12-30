@@ -1,5 +1,15 @@
 import json
 import requests
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+
+load_dotenv(join(dirname(__file__), '.env'))
+
+BUSTIME_API_KEY = os.environ.get('BUSTIME_API_KEY')
+
+if not BUSTIME_API_KEY:
+  raise Exception('BUSTIME_API_KEY enviroment variable must be present')
 
 """
 Query the MTA BusTime stop monitoring endpoint for bus information.
@@ -14,8 +24,8 @@ FEET_PER_METER = 3.28084
 FEET_PER_MILE = 5280
 
 class StopMonitor(object):
-  def __init__(self, api_key, stop_id, route, max_visits=3):
-    self.api_key = api_key
+  def __init__(self, stop_id, route, max_visits=3):
+    self.api_key = BUSTIME_API_KEY
     self.stop_id = stop_id
     self.route = route
     self.max_visits = max_visits
