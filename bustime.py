@@ -10,8 +10,6 @@ Example calls:
 """
 
 STOP_MONITORING_ENDPOINT = "http://bustime.mta.info/api/siri/stop-monitoring.json"
-VEHICLE_MONITORING_ENDPOINT = "http://bustime.mta.info/api/siri/vehicle-monitoring.json"
-
 FEET_PER_METER = 3.28084
 FEET_PER_MILE = 5280
 
