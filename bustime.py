@@ -90,3 +90,16 @@ class Visit(object):
 
   def __str__(self):
     return ('{} {} stops/{}mi').format(self.route, self.stops_away, self.distance)
+
+if __name__ == '__main__':
+  import argparse
+
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-s', '--stop', type=int)
+  parser.add_argument('-r', '--route')
+  parser.add_argument('-m', '--max_visits', type=int, default=3)
+  args = parser.parse_args()
+
+  monitor = StopMonitor(args.stop, args.route, args.max_visits)
+
+  print(monitor)
