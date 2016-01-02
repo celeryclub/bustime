@@ -16,7 +16,7 @@ class StopMonitor(object):
     self.error = None
 
     if not api_key:
-      sys.exit('BUSTIME_API_KEY enviroment variable must be present')
+      sys.exit('API key must be present')
 
     if not self.stop_id:
       sys.exit('You must provide a stop ID')
