@@ -24,7 +24,7 @@ FEET_PER_METER = 3.28084
 FEET_PER_MILE = 5280
 
 class StopMonitor(object):
-  def __init__(self, stop_id, route, max_visits=3):
+  def __init__(self, stop_id, route=None, max_visits=3):
     self.api_key = BUSTIME_API_KEY
     self.stop_id = stop_id
     self.route = route
