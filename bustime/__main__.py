@@ -1,7 +1,7 @@
 if __name__ == '__main__':
   import argparse
   from os import getenv
-  from .monitor import StopMonitor
+  from .stop import StopMonitor
 
   BUSTIME_API_KEY = getenv('BUSTIME_API_KEY')
 
