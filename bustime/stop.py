@@ -6,7 +6,7 @@ STOP_MONITORING_ENDPOINT = 'http://bustime.mta.info/api/siri/stop-monitoring.jso
 FEET_PER_METER = 3.28084
 FEET_PER_MILE = 5280
 
-class StopMonitor(object):
+class StopStatus(object):
   def __init__(self, api_key, stop_id, route=None, max_visits=3):
     self.api_key = api_key
     self.stop_id = stop_id
